@@ -1,0 +1,12 @@
+default | linreg | CV score 0.1605 | 0.8139 s
+default | lasso | CV score 0.1365 | 1.4356 s
+default | ridge | CV score 0.1401 | 0.5923 s
+default | elasticnet | CV score 0.1376 | 2.5240 s
+default | KNN | CV score 0.1697 | 2.1740 s
+default | decision_tree | CV score 0.1903 | 0.6895 s
+default | random_forest | CV score 0.1393 | 3.2815 s
+default | catboost | CV score 0.1206 | 67.7907 s
+default | xgboost | CV score 0.1208 | 14.8011 s
+default | lgbm | CV score 0.1245 | 5.0382 s
+default | DNN | CV score 0.7949 | 122.0621 s
+default | stacking_knn_tree_linreg | CV score 0.1410 | 43.8251 s

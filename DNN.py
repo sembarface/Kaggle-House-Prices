@@ -12,6 +12,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
+from torch.amp.grad_scaler import GradScaler
+
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
@@ -62,10 +64,10 @@ class DNN(nn.Module):
         y_val_tensor = torch.tensor(y_val.to_numpy(), dtype=torch.float32).reshape(-1,1)
 
         train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
-        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
+        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True, drop_last=True)
         
         val_dataset = TensorDataset(X_val_tensor, y_val_tensor)
-        val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
+        val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False, drop_last=True)
         
         
         self.input_size = X_train_tensor.shape[1]
@@ -76,6 +78,8 @@ class DNN(nn.Module):
         loss_function = torch.nn.MSELoss()
         optimizer = get_optimizer(self.optimizer_name, params=self.parameters(), lr=self.learning_rate)
         scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs)
+        
+        scaler = GradScaler(self.device)
         
         
         self.val_losses_ = []
@@ -94,11 +98,13 @@ class DNN(nn.Module):
                 
                 optimizer.zero_grad()
                 
-                outputs = self(X_batch)
-                loss = loss_function(outputs, y_batch)
+                with torch.autocast(self.device):
+                    outputs = self(X_batch)
+                    loss = loss_function(outputs, y_batch)
                 
-                loss.backward()
-                optimizer.step()
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
                 
                 train_loss += loss.item()
                 
@@ -116,8 +122,9 @@ class DNN(nn.Module):
                 for X_batch, y_batch in val_loader:
                     X_batch, y_batch = X_batch.to(self.device), y_batch.to(self.device)
 
-                    outputs = self(X_batch)
-                    loss = loss_function(outputs, y_batch)
+                    with torch.autocast(self.device):
+                        outputs = self(X_batch)
+                        loss = loss_function(outputs, y_batch)
                     
                     val_loss += loss.item()
                 

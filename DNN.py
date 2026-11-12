@@ -38,11 +38,11 @@ class DNN(nn.Module):
         """Build model for the custom input size."""
         
         self.mlp = nn.Sequential(
-            nn.Linear(input_size, 5),
-            nn.BatchNorm1d(5),
+            nn.Linear(input_size, 128),
+            nn.BatchNorm1d(128),
             nn.ReLU(),
             
-            nn.Linear(5, self.output_size),
+            nn.Linear(128, self.output_size),
         )
         
         

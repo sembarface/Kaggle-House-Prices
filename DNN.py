@@ -42,7 +42,11 @@ class DNN(nn.Module):
             nn.BatchNorm1d(128),
             nn.ReLU(),
             
-            nn.Linear(128, self.output_size),
+            nn.Linear(128, 64),
+            nn.BatchNorm1d(64),
+            nn.ReLU(),
+            
+            nn.Linear(64, self.output_size),
         )
         
         

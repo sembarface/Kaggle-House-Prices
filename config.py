@@ -3,35 +3,35 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'ML optuna'
+    experiment_name = 'DL 400epoch eta_min'
     
     models_to_train = [
-        "linreg",
-        "lasso",
-        "ridge",
-        "elasticnet",
-        "KNN",
-        "decision_tree",
-        "random_forest",
-        "catboost",
-        "xgboost",
-        "lgbm",
-        # "DNN",
-        "stacking_knn_tree_linreg"
+        # "linreg",
+        # "lasso",
+        # "ridge",
+        # "elasticnet",
+        # "KNN",
+        # "decision_tree",
+        # "random_forest",
+        # "catboost",
+        # "xgboost",
+        # "lgbm",
+        "DNN",
+        # "stacking_knn_tree_linreg"
     ]
     
-    solver_model = 'catboost'
+    solver_model = 'DNN'
     get_submission = False
     
     use_holdout = False
 
     is_train = True
     
-    use_optuna = True
+    use_optuna = False
     optuna_n_trials = 30
     
     show_plots = True
-    show_shap = True
+    show_shap = False
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
@@ -192,7 +192,7 @@ class Config:
         "DNN": {
             "device": "cuda",
             "output_size": 1,
-            "epochs": 200,
+            "epochs": 400,
             "batch_size": 32,
             "learning_rate": 1e-3,
             "optimizer_name": "Adam"
@@ -403,7 +403,7 @@ class Config:
             "epochs": {
                 "type": "int",
                 "low": 100,
-                "high": 300,
+                "high": 400,
                 "step": 100
             },
             "optimizer_name": {

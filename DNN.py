@@ -38,17 +38,22 @@ class DNN(nn.Module):
         """Build model for the custom input size."""
         
         self.mlp = nn.Sequential(
-            nn.Linear(input_size, 128),
+            nn.Linear(input_size, 256),
+            nn.BatchNorm1d(256),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            
+            nn.Linear(256, 256),
+            nn.BatchNorm1d(256),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            
+            nn.Linear(256, 128),
             nn.BatchNorm1d(128),
             nn.ReLU(),
-            nn.Dropout(0.5),
+            nn.Dropout(0.1),
             
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            
-            nn.Linear(64, self.output_size),
+            nn.Linear(128, self.output_size),
         )
         
         
@@ -83,7 +88,7 @@ class DNN(nn.Module):
 
         loss_function = torch.nn.MSELoss()
         optimizer = get_optimizer(self.optimizer_name, params=self.parameters(), lr=self.learning_rate)
-        scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs)
+        scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs, eta_min=3e-7)
         
         scaler = GradScaler(self.device)
         

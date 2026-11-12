@@ -88,6 +88,11 @@ def main():
             json.dump(metrics, f, indent=4)                  
              
 
+    solver = Solver(config.path_to_experiment, config.solver_model)
+    # Train/val plots
+    if config.show_plots:
+        solver.get_plots()
+        
     # Test score
     if config.use_holdout:
         # Pick solver

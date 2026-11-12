@@ -97,3 +97,33 @@ ML add new features | catboost | CV score 0.1222 | 98.9688 s
 ML add new features | xgboost | CV score 0.1211 | 12.2396 s
 ML add new features | lgbm | CV score 0.1246 | 1.6101 s
 ML add new features | stacking_knn_tree_linreg | CV score 0.1366 | 19.1213 s
+ML optuna | linreg | CV score 0.1479 | 0.9465 s
+ML optuna | lasso | CV score 0.1378 | 1.2774 s
+ML optuna | ridge | CV score 0.1391 | 0.7124 s
+ML optuna | elasticnet | CV score 0.1379 | 1.3539 s
+ML optuna | KNN | CV score 0.1641 | 0.9799 s
+ML optuna | decision_tree | CV score 0.1864 | 0.7987 s
+ML optuna | random_forest | CV score 0.1372 | 4.8246 s
+ML optuna | catboost | CV score 0.1206 | 102.7059 s
+ML optuna | xgboost | CV score 0.1196 | 8.8782 s
+ML optuna | lgbm | CV score 0.1234 | 1.3728 s
+ML optuna | stacking_knn_tree_linreg | CV score 0.1351 | 2.6331 s
+DL baseline | DNN | CV score 0.7492 | 67.1457 s
+DL more neurons | DNN | CV score 0.7501 | 70.8264 s
+DL more layers | DNN | CV score 0.3549 | 83.4981 s
+DL dropout | DNN | CV score 0.8704 | 86.2890 s
+DL dropout | DNN | CV score 0.3480 | 129.3844 s
+DL batchsize64 | DNN | CV score 0.3805 | 50.1726 s
+DL 3 layers | DNN | CV score 0.3488 | 133.0868 s
+DL 4 layers | DNN | CV score 0.9437 | 106.1852 s
+DL 128 128 16 | DNN | CV score 0.3079 | 106.7663 s
+DL 128 128 64 | DNN | CV score 0.2193 | 102.3052 s
+DL 256 128 64 | DNN | CV score 0.2102 | 100.9828 s
+DL 256 256 128 | DNN | CV score 0.1904 | 108.1647 s
+DL 256 256 128 dropout 0.1 | DNN | CV score 0.1862 | 294.6668 s
+DL 256 256 128 no dropout | DNN | CV score 0.2023 | 309.6947 s
+DL 256 256 128 no dropout | DNN | CV score 0.2296 | 201.5300 s
+DL 512 256 128 | DNN | CV score 0.1928 | 160.0574 s
+DL 300epoch | DNN | CV score 0.1688 | 180.7994 s
+DL 400epoch | DNN | CV score 0.1655 | 254.6662 s
+DL 400epoch eta_min | DNN | CV score 0.1632 | 280.4641 s

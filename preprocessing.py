@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer, make_column_selector
@@ -12,25 +13,47 @@ class Preprocessor:
         self.model_name = model_name
         self.config = config
 
-    def _fit_aggregations(self, X):
-        self.area_means_ = X.groupby("Neighborhood")["GrLivArea"].mean()
-        self.global_area_ = X["GrLivArea"].mean()
+    def _fit_aggregations(self, X: pd.DataFrame):
+        params = self.config.feature_parameters
+        if params['add_NeighborhoodMeanArea']:
+            self.area_means_ = X.groupby("Neighborhood")["GrLivArea"].mean()
+            self.global_area_ = X["GrLivArea"].mean()
 
-    def _create_features(self, X):
+    def _create_features(self, X: pd.DataFrame):
         X = X.copy()
+        params = self.config.feature_parameters
+        
+        # Fixing wrong column type
+        X["MSSubClass"] = X["MSSubClass"].astype('category')
+        
+        # New features
+        if params['add_HouseAge']:
+            X["HouseAge"] = X["YrSold"] - X["YearBuilt"]
 
-        X["HouseAge"] = X["YrSold"] - X["YearBuilt"]
-        X["TotalArea"] = X["1stFlrSF"] + X["2ndFlrSF"]
+        if params['add_TotalArea']:   
+            X["TotalArea"] = X["1stFlrSF"] + X["2ndFlrSF"]
         
         # Aggregated features
-        X["NeighborhoodMeanArea"] = (
-            X["Neighborhood"].map(self.area_means_)
-            .fillna(self.global_area_)
-        )
-
-        X["MSSubClass"] = X["MSSubClass"].astype('category')
+        if params['add_NeighborhoodMeanArea']:
+            X["NeighborhoodMeanArea"] = (
+                X["Neighborhood"].map(self.area_means_)
+                .fillna(self.global_area_)
+            )
+        
+        X = X.drop(columns=params['drop_columns'])
+        return X
+    
+    def _fill_missing(self, X: pd.DataFrame):
+        
+        # None makes sense
+        X = X.copy()
+        none_categories = self.config.feature_parameters['none_categories']
+        zero_fill_columns = self.config.feature_parameters['zero_fill_columns']
+        X[none_categories] = X[none_categories].fillna('None')
+        X[zero_fill_columns] = X[zero_fill_columns].fillna(0)
 
         return X
+        
 
     def _build_transformer(self):
         numeric_steps = [
@@ -46,6 +69,7 @@ class Preprocessor:
             ("imputer", SimpleImputer(strategy="most_frequent")),
             ("encoder", OneHotEncoder(
                 handle_unknown="ignore",
+                min_frequency=10,
                 sparse_output=False
             ))
         ])
@@ -57,13 +81,14 @@ class Preprocessor:
             ))
         ]).set_output(transform="pandas")
 
-    def fit(self, X, y=None):
+    def fit(self, X: pd.DataFrame, y=None):
         self.input_cols_ = X.columns.tolist()
 
+        X = self._fill_missing(X)
         self._fit_aggregations(X)
         X = self._create_features(X)
 
-        if self.model_name == "catboost":
+        if self.model_name == 'catboost':
             self.cat_cols_ = X.select_dtypes(
                 include=["object", "category", "string"]
             ).columns.tolist()
@@ -73,13 +98,16 @@ class Preprocessor:
 
         return self
 
-    def transform(self, X):
+    def transform(self, X: pd.DataFrame):
+                
+        X = self._fill_missing(X[self.input_cols_])
         X = self._create_features(X[self.input_cols_])
 
-        if self.model_name == "catboost":
+        
+        if self.model_name == 'catboost':
             X[self.cat_cols_] = (
                 X[self.cat_cols_]
-                .astype("string")
+                .astype('string')
                 .fillna("__MISSING__")
                 .astype(str)
             )
@@ -87,5 +115,5 @@ class Preprocessor:
 
         return self.transformer_.transform(X)
 
-    def fit_transform(self, X, y=None):
+    def fit_transform(self, X: pd.DataFrame, y=None):
         return self.fit(X, y).transform(X)

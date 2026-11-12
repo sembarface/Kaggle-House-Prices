@@ -10,3 +10,90 @@ default | xgboost | CV score 0.1208 | 14.8011 s
 default | lgbm | CV score 0.1245 | 5.0382 s
 default | DNN | CV score 0.7949 | 122.0621 s
 default | stacking_knn_tree_linreg | CV score 0.1410 | 43.8251 s
+ML baseline | linreg | CV score 0.1575 | 0.8519 s
+ML baseline | lasso | CV score 0.1379 | 0.7305 s
+ML baseline | ridge | CV score 0.1406 | 0.6507 s
+ML baseline | elasticnet | CV score 0.1382 | 0.9332 s
+ML baseline | KNN | CV score 0.1723 | 2.3931 s
+ML baseline | decision_tree | CV score 0.1963 | 0.6980 s
+ML baseline | random_forest | CV score 0.1409 | 3.3209 s
+ML baseline | linreg | CV score 0.1575 | 0.8498 s
+ML baseline | lasso | CV score 0.1379 | 0.7436 s
+ML baseline | ridge | CV score 0.1406 | 0.6037 s
+ML baseline | elasticnet | CV score 0.1382 | 0.8978 s
+ML baseline | KNN | CV score 0.1723 | 2.0627 s
+ML baseline | decision_tree | CV score 0.1963 | 0.6635 s
+ML baseline | random_forest | CV score 0.1409 | 3.3080 s
+ML baseline | catboost | CV score 0.1231 | 96.6599 s
+ML baseline | lgbm | CV score 0.1246 | 2.4521 s
+ML baseline | stacking_knn_tree_linreg | CV score 0.1399 | 19.1745 s
+ML baseline | lgbm | CV score 0.1246 | 2.6585 s
+ML baseline | catboost | CV score 0.1231 | 214.4807 s
+ML baseline | lgbm | CV score 0.1246 | 2.5232 s
+ML baseline | stacking_knn_tree_linreg | CV score 0.1399 | 25.9458 s
+ML all onehot | linreg | CV score 0.1575 | 0.8587 s
+ML all onehot | lasso | CV score 0.1379 | 0.7236 s
+ML all onehot | ridge | CV score 0.1406 | 0.6473 s
+ML all onehot | elasticnet | CV score 0.1382 | 0.9779 s
+ML all onehot | KNN | CV score 0.1723 | 2.2484 s
+ML all onehot | decision_tree | CV score 0.1963 | 0.7282 s
+ML all onehot | random_forest | CV score 0.1409 | 3.3816 s
+ML all onehot | catboost | CV score 0.1231 | 104.9516 s
+ML all onehot | xgboost | CV score 0.1228 | 12.5281 s
+ML all onehot | lgbm | CV score 0.1270 | 1.4395 s
+ML all onehot | stacking_knn_tree_linreg | CV score 0.1399 | 19.0902 s
+ML add ordinal | linreg | CV score 0.1587 | 0.7990 s
+ML add ordinal | lasso | CV score 0.1372 | 0.7071 s
+ML add ordinal | ridge | CV score 0.1394 | 0.6204 s
+ML add ordinal | elasticnet | CV score 0.1373 | 0.7859 s
+ML add ordinal | KNN | CV score 0.1775 | 2.2100 s
+ML add ordinal | decision_tree | CV score 0.1937 | 0.8013 s
+ML add ordinal | random_forest | CV score 0.1400 | 3.2976 s
+ML add ordinal | catboost | CV score 0.1231 | 87.5500 s
+ML add ordinal | xgboost | CV score 0.1226 | 8.8224 s
+ML add ordinal | lgbm | CV score 0.1260 | 1.4672 s
+ML add ordinal | stacking_knn_tree_linreg | CV score 0.1427 | 19.8429 s
+ML NO fill nans | linreg | CV score 0.1605 | 0.7812 s
+ML NO fill nans | lasso | CV score 0.1373 | 0.6648 s
+ML NO fill nans | ridge | CV score 0.1409 | 0.5644 s
+ML NO fill nans | elasticnet | CV score 0.1381 | 0.7941 s
+ML NO fill nans | KNN | CV score 0.1729 | 2.1079 s
+ML NO fill nans | decision_tree | CV score 0.1951 | 0.6315 s
+ML NO fill nans | random_forest | CV score 0.1408 | 3.2497 s
+ML NO fill nans | catboost | CV score 0.1231 | 85.9591 s
+ML NO fill nans | xgboost | CV score 0.1219 | 11.8651 s
+ML NO fill nans | lgbm | CV score 0.1273 | 1.4320 s
+ML NO fill nans | stacking_knn_tree_linreg | CV score 0.1421 | 18.7798 s
+ML min_freq | linreg | CV score 0.1477 | 0.8724 s
+ML min_freq | lasso | CV score 0.1384 | 0.7693 s
+ML min_freq | ridge | CV score 0.1406 | 0.7032 s
+ML min_freq | elasticnet | CV score 0.1394 | 0.8721 s
+ML min_freq | KNN | CV score 0.1724 | 2.2697 s
+ML min_freq | decision_tree | CV score 0.1966 | 0.7807 s
+ML min_freq | random_forest | CV score 0.1416 | 3.4206 s
+ML min_freq | catboost | CV score 0.1231 | 90.0277 s
+ML min_freq | xgboost | CV score 0.1220 | 11.5168 s
+ML min_freq | lgbm | CV score 0.1272 | 1.5231 s
+ML min_freq | stacking_knn_tree_linreg | CV score 0.1378 | 19.0826 s
+ML drop | linreg | CV score 0.1479 | 1.0255 s
+ML drop | lasso | CV score 0.1384 | 0.8532 s
+ML drop | ridge | CV score 0.1407 | 1.9589 s
+ML drop | elasticnet | CV score 0.1394 | 3.4430 s
+ML drop | KNN | CV score 0.1724 | 3.8899 s
+ML drop | decision_tree | CV score 0.1964 | 2.2457 s
+ML drop | random_forest | CV score 0.1409 | 10.6606 s
+ML drop | catboost | CV score 0.1227 | 116.7177 s
+ML drop | xgboost | CV score 0.1229 | 10.3459 s
+ML drop | lgbm | CV score 0.1272 | 1.5408 s
+ML drop | stacking_knn_tree_linreg | CV score 0.1378 | 19.4423 s
+ML add new features | linreg | CV score 0.1479 | 0.9133 s
+ML add new features | lasso | CV score 0.1378 | 1.2551 s
+ML add new features | ridge | CV score 0.1399 | 0.6925 s
+ML add new features | elasticnet | CV score 0.1391 | 2.1608 s
+ML add new features | KNN | CV score 0.1681 | 2.3274 s
+ML add new features | decision_tree | CV score 0.1918 | 0.7976 s
+ML add new features | random_forest | CV score 0.1399 | 3.5540 s
+ML add new features | catboost | CV score 0.1222 | 98.9688 s
+ML add new features | xgboost | CV score 0.1211 | 12.2396 s
+ML add new features | lgbm | CV score 0.1246 | 1.6101 s
+ML add new features | stacking_knn_tree_linreg | CV score 0.1366 | 19.1213 s

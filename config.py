@@ -3,7 +3,7 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'default'
+    experiment_name = 'ML optuna'
     
     models_to_train = [
         "linreg",
@@ -16,31 +16,66 @@ class Config:
         "catboost",
         "xgboost",
         "lgbm",
-        "DNN",
+        # "DNN",
         "stacking_knn_tree_linreg"
     ]
     
     solver_model = 'catboost'
-    get_submission = True
+    get_submission = False
     
     use_holdout = False
 
     is_train = True
     
-    use_optuna = False
+    use_optuna = True
     optuna_n_trials = 30
     
-    show_plots = False
-    show_shap = False
+    show_plots = True
+    show_shap = True
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
     path_to_submissions = f'submissions'
     
     
-    # feature_parameters = {
-
-    # }
+    feature_parameters = {
+        'add_HouseAge': True,
+        'add_TotalArea': True,
+        
+        'drop_columns': ['Utilities', 'Street'],
+        
+        # Aggregated features
+        'add_NeighborhoodMeanArea': True,
+        
+        # None makes sense
+        "none_categories": [
+            "Alley",
+            "BsmtQual",
+            "BsmtCond",
+            "BsmtExposure",
+            "BsmtFinType1",
+            "BsmtFinType2",
+            "FireplaceQu",
+            "GarageType",
+            "GarageFinish",
+            "GarageQual",
+            "GarageCond",
+            "PoolQC",
+            "Fence",
+            "MiscFeature"
+        ],
+        "zero_fill_columns": [
+            "BsmtFinSF1",
+            "BsmtFinSF2",
+            "BsmtUnfSF",
+            "TotalBsmtSF",
+            "BsmtFullBath",
+            "BsmtHalfBath",
+            "GarageCars",
+            "GarageArea"
+        ],
+        
+    }
     
     # Preprocessing
     preprocessing = {
@@ -53,10 +88,6 @@ class Config:
             "DNN",
             "stacking_knn_tree_linreg"
         ],
-
-        "native_categorical_models": [
-            "catboost"
-        ]
     }
     
     kfold_parameters = {
@@ -119,7 +150,7 @@ class Config:
             "loss_function": "RMSE",
             "eval_metric": "RMSE",
             "random_seed": seed,
-            "one_hot_max_size": 10,
+            "one_hot_max_size": 4,
             "early_stopping_rounds": 100,
             "use_best_model": True,
             "verbose": False
@@ -138,7 +169,7 @@ class Config:
             "tree_method": "hist",
             "n_jobs": -1,
             "random_state": seed,
-            "early_stopping_rounds": 100
+            "early_stopping_rounds": 100,
         },
 
         "lgbm": {
@@ -159,7 +190,7 @@ class Config:
         },
 
         "DNN": {
-            "device": "cpu",
+            "device": "cuda",
             "output_size": 1,
             "epochs": 200,
             "batch_size": 32,

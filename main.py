@@ -93,7 +93,7 @@ def main():
         # Pick solver
         solver = Solver(config.path_to_experiment, config.solver_model)
         pred = solver.predict(X_test)
-        print(f'{solver.model_name} test accurasy score = ', mean_squared_error(pred, y_test))
+        print(f'{solver.model_name} rmse score = ', mean_squared_error(pred, y_test))
         
         # Train/val plots
         if config.show_plots:
@@ -101,7 +101,7 @@ def main():
             
         # Shap beeswarm on train samples
         if config.show_shap:
-            X = data.drop('Survived', axis=1)
+            X = data.drop('SalePrice', axis=1)
             solver.get_shap(X)
     
     

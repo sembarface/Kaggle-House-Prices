@@ -1,0 +1,14 @@
+numpy==2.2.4
+pandas==3.0.3
+scikit-learn==1.8.0
+catboost==1.2.10
+xgboost==3.2.0
+lightgbm==4.7.0
+optuna==5.0.0
+--extra-index-url https://download.pytorch.org/whl/cu126
+torch==2.12.0+cu126
+matplotlib==3.10.9
+seaborn==0.13.2
+shap==0.51.0
+tqdm==4.67.3
+ipykernel==7.2.0

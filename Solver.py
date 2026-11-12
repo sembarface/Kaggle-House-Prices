@@ -55,7 +55,7 @@ class Solver:
             self.preprocessors.append(preprocessor)
     
     def predict(self, X: pd.DataFrame):
-        """Average class probabilities across cross-validation models."""
+        """Average predictions across cross-validation models."""
         
         predictions = []
         for preprocessor, model in zip(self.preprocessors, self.models):

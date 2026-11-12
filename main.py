@@ -7,7 +7,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 
 from Solver import Solver
 
@@ -25,7 +25,7 @@ def main():
     
     data = pd.read_csv(config.path_to_data, index_col='Id')
     
-    # Log dataset target
+    # Log-transform the target to match the competition metric
     X, y = data.drop('SalePrice', axis=1), np.log(data['SalePrice'])
     
     if config.use_holdout:
@@ -98,7 +98,7 @@ def main():
         # Pick solver
         solver = Solver(config.path_to_experiment, config.solver_model)
         pred = solver.predict(X_test)
-        print(f'{solver.model_name} rmse score = ', mean_squared_error(pred, y_test))
+        print(f'{solver.model_name} rmse score = ', root_mean_squared_error(pred, y_test))
         
         # Train/val plots
         if config.show_plots:

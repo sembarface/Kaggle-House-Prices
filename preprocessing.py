@@ -8,18 +8,24 @@ from sklearn.impute import SimpleImputer
 
 
 class Preprocessor:
-
+    """Preprocess tabular features for training and inference."""
     def __init__(self, model_name, config):
         self.model_name = model_name
         self.config = config
 
     def _fit_aggregations(self, X: pd.DataFrame):
+        """Calculate feature statistics on training data."""
+        
         params = self.config.feature_parameters
+        
+        # Calculate neighborhood statistics using training data only
         if params['add_NeighborhoodMeanArea']:
             self.area_means_ = X.groupby("Neighborhood")["GrLivArea"].mean()
             self.global_area_ = X["GrLivArea"].mean()
 
     def _create_features(self, X: pd.DataFrame):
+        """Create new features from existing columns."""
+        
         X = X.copy()
         params = self.config.feature_parameters
         
@@ -34,6 +40,7 @@ class Preprocessor:
             X["TotalArea"] = X["1stFlrSF"] + X["2ndFlrSF"]
         
         # Aggregated features
+        # Use global mean for unseen neighborhoods
         if params['add_NeighborhoodMeanArea']:
             X["NeighborhoodMeanArea"] = (
                 X["Neighborhood"].map(self.area_means_)
@@ -44,8 +51,9 @@ class Preprocessor:
         return X
     
     def _fill_missing(self, X: pd.DataFrame):
+        """Fill missing values with feature-specific values."""
         
-        # None makes sense
+        # Missing values represent the absence of an object
         X = X.copy()
         none_categories = self.config.feature_parameters['none_categories']
         zero_fill_columns = self.config.feature_parameters['zero_fill_columns']
@@ -56,6 +64,8 @@ class Preprocessor:
         
 
     def _build_transformer(self):
+        """Build numerical and categorical preprocessing pipelines."""
+        
         numeric_steps = [
             ("imputer", SimpleImputer(strategy="median"))
         ]
@@ -82,6 +92,8 @@ class Preprocessor:
         ]).set_output(transform="pandas")
 
     def fit(self, X: pd.DataFrame, y=None):
+        """Fit preprocessing statistics and transformations."""
+        
         self.input_cols_ = X.columns.tolist()
 
         X = self._fill_missing(X)
@@ -99,6 +111,7 @@ class Preprocessor:
         return self
 
     def transform(self, X: pd.DataFrame):
+        """Transform data using the fitted preprocessor."""
                 
         X = self._fill_missing(X[self.input_cols_])
         X = self._create_features(X[self.input_cols_])
@@ -116,4 +129,5 @@ class Preprocessor:
         return self.transformer_.transform(X)
 
     def fit_transform(self, X: pd.DataFrame, y=None):
+        """Fit the preprocessor and transform training data."""
         return self.fit(X, y).transform(X)

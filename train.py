@@ -54,7 +54,7 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, conf
         params = config.model_parameters[model_name]
     
     
-    # Fit preprocessor and transform data
+    # Fit preprocessing on each training fold to prevent data leakage
     preprocessor = Preprocessor(model_name, config)
     X_train = preprocessor.fit_transform(X_train, y_train)
     X_val = preprocessor.transform(X_val)

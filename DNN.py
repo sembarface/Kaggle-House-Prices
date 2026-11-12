@@ -78,7 +78,7 @@ class DNN(nn.Module):
         train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True, drop_last=True)
         
         val_dataset = TensorDataset(X_val_tensor, y_val_tensor)
-        val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False, drop_last=True)
+        val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
         
         
         self.input_size = X_train_tensor.shape[1]
@@ -90,6 +90,7 @@ class DNN(nn.Module):
         optimizer = get_optimizer(self.optimizer_name, params=self.parameters(), lr=self.learning_rate)
         scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs, eta_min=3e-7)
         
+        # Mixed precision training with gradient scaling
         scaler = GradScaler(self.device)
         
         
@@ -142,7 +143,7 @@ class DNN(nn.Module):
             val_loss /= len(val_loader)
             self.val_losses_.append(val_loss)
             
-            # Remember best_state
+            # Save weights with the lowest validation loss
             if val_loss < self.best_val_loss_:
                 self.best_epoch_ = epoch + 1
                 self.best_val_loss_ = val_loss
@@ -164,7 +165,7 @@ class DNN(nn.Module):
         return self
     
     def predict(self, X: pd.DataFrame):
-        """Predict class probabilities for input samples."""
+        """Predict log-transformed house prices."""
         
         self.eval()
         with torch.no_grad():

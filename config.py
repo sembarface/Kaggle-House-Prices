@@ -3,25 +3,25 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'DL 400epoch eta_min'
+    experiment_name = 'experiment'
     
     models_to_train = [
-        # "linreg",
-        # "lasso",
-        # "ridge",
-        # "elasticnet",
-        # "KNN",
-        # "decision_tree",
-        # "random_forest",
-        # "catboost",
-        # "xgboost",
-        # "lgbm",
+        "linreg",
+        "lasso",
+        "ridge",
+        "elasticnet",
+        "KNN",
+        "decision_tree",
+        "random_forest",
+        "catboost",
+        "xgboost",
+        "lgbm",
         "DNN",
-        # "stacking_knn_tree_linreg"
+        "stacking_knn_tree_linreg"
     ]
     
-    solver_model = 'DNN'
-    get_submission = False
+    solver_model = "catboost"
+    get_submission = True
     
     use_holdout = False
 
@@ -30,7 +30,7 @@ class Config:
     use_optuna = False
     optuna_n_trials = 30
     
-    show_plots = True
+    show_plots = False
     show_shap = False
     
     path_to_experiment = f"experiments/{experiment_name}"
@@ -432,8 +432,8 @@ class Config:
             "seed": self.seed,
             "use_optuna": self.use_optuna,
             "optuna_n_trials": self.optuna_n_trials if self.use_optuna else None,
-            # "feature_parameters": self.feature_parameters,
-            # "preprocessing": self.preprocessing,
+            "feature_parameters": self.feature_parameters,
+            "preprocessing": self.preprocessing,
             "kfold_parameters": self.kfold_parameters,
             "model_parameters": {
                 name: self.model_parameters[name]

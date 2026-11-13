@@ -14,11 +14,6 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 
-
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import KFold
 
 from sklearn.metrics import root_mean_squared_error
